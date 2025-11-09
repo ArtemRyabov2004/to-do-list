@@ -6,13 +6,7 @@
             renderTasks();
         });
 
-        const task = tasks.find(t => t.id === id);
-        const taskElement = document.querySelector(`[data-task-id="${id}"]`);
-        taskElement.innerHTML = `
-        <input type="text" id="edit-${id}" value="${task.text}">
-        <button onclick="saveEdit(${id})">Сохранить</button>
-        <button onclick="cancelEdit(${id})">Отменить</button>
-        `;
+      
 
         // Добавление новой задачи
         function addTask() {
@@ -104,14 +98,30 @@
             renderTasks()
         }
 
+        function searchTasks(searchTerm) {
+            if (searchTerm === '') {
+                renderTasks();
+                return;
+            }
+            
+            const fileteredTasks = tasks.filter(task =>
+                task.text.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            renderTasks(fileteredTasks);
+        }
+
         // Отображение всех задач
-        function renderTasks() {
+        function renderTasks(tasksToRender = tasks) {
             const container = document.getElementById('tasksContainer');
 
-            if (tasks.length === 0) {
-                container.innerHTML = '<div class="empty-state">Нет задач. Добавьте первую задачу!</div>';
+            if (tasksToRender.length === 0) {
+                if (tasks.length === 0) {
+                     container.innerHTML = '<div class="empty-state">Нет задач. Добавьте первую задачу!</div>';
+                } else {
+                container.innerHTML = '<div class="empty-state">Задачи не найдены</div>';
+                } 
             } else {
-                container.innerHTML = tasks.map(task => `
+                container.innerHTML = tasksToRender.map(task => `
             <div class="task-item ${task.completed ? 'completed' : ''}" data-task-id="${task.id}">
                 <input
                     type="checkbox"

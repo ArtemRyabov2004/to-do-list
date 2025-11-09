@@ -16,10 +16,16 @@
             <input type="text" id="taskInput" placeholder="Введите новую задачу..."
                 onkeypress="if(event.key === 'Enter') addTask()">
             <button id="addButton" onclick="addTask()">Добавить</button>
-            <button onclick="deleteCompleted()" class="delete-all-button">
-                🗑️ Удалить выполненные
-            </button>
+           
         </div>
+        <div class="search-container">
+         <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Поиск задач..."
+        onkeyup="searchTasks(this.value)"
+    >
+    </div>
 
         <div class="tasks-container" id="tasksContainer">
             <!-- Задачи будут добавлены сюда -->
@@ -28,6 +34,9 @@
         <div class="stats">
             <span>Всего: <strong id="totalTasks">0</strong></span>
             <span>Выполнено: <strong id="completedTasks">0</strong></span>
+             <button onclick="deleteCompleted()" class="delete-all-button">
+                🗑️ Удалить выполненные
+            </button>
         </div>
     </div>
 
